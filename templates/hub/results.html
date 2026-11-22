@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<h2 class="bar">Sample Results</h2><table><tr><th>Date</th><th>Game</th><th>Result</th></tr>{% for r in results %}<tr><td>{{ r.result_date }}</td><td>{{ r.game_name }}</td><td>{{ r.result_value }}</td></tr>{% empty %}<tr><td colspan="3">No results yet. Run seed_demo.</td></tr>{% endfor %}</table>{% endblock %}

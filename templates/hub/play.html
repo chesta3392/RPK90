@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<h2 class="bar">Play · Demo Games</h2>{% for game in games %}<div class="game-row"><b>{{ game.name }}</b><a class="pill" href="{% url 'demo_game' game.id %}">Open Demo</a></div>{% empty %}<p>No games yet. Run <code>python manage.py seed_demo</code>.</p>{% endfor %}{% endblock %}

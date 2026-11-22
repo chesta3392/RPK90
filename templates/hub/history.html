@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<h2 class="bar">Demo History</h2><table><tr><th>Date</th><th>Game</th><th>Selection</th><th>Outcome</th></tr>{% for e in entries %}<tr><td>{{ e.created_at }}</td><td>{{ e.game.name }}</td><td>{{ e.selection }}</td><td>{{ e.outcome }}</td></tr>{% empty %}<tr><td colspan="4">No demo entries yet.</td></tr>{% endfor %}</table>{% endblock %}
