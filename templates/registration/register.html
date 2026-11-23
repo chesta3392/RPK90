@@ -1,1 +1,325 @@
-<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/static/site.css"><title>Register</title></head><body><main class="auth"><h1>Demo Play Hub</h1><h2>Create account</h2><form method="post">{% csrf_token %}{{ form.as_p }}<button class="pill">Register</button></form><p><a href="{% url 'login' %}">Login</a></p></main></body></html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | Demo Play Hub</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(
+        180deg,
+        #7a3709 0%,
+        #ad7e2b 52%,
+        #e7c74a 100%
+    );
+    color: #18213a;
+}
+
+.notice {
+    width: 90%;
+    margin: 54px auto 0;
+    background: white;
+    border-radius: 5px;
+    padding: 7px 12px;
+    text-align: center;
+    color: green;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.35;
+}
+
+.panel {
+    position: relative;
+    width: 90%;
+    margin: 152px auto 54px;
+    background: white;
+    border-radius: 6px;
+    padding: 57px 10px 30px;
+}
+
+.logo {
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 76px;
+    width: 76px;
+    border-radius: 50%;
+    border: 5px ridge #ae7516;
+    background: radial-gradient(
+        circle at 38% 30%,
+        #ffe77c,
+        #b77c06 70%,
+        #4e2900
+    );
+    box-shadow: 0 2px 5px #777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: #111;
+}
+
+.logo small {
+    font-size: 11px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 21px;
+    margin: 2px 0 23px;
+    font-weight: 600;
+    color: #282828;
+}
+
+.field {
+    margin-bottom: 14px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.field label em {
+    color: red;
+    font-style: normal;
+}
+
+.control {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+    padding: 0 12px;
+}
+
+.control:focus-within {
+    border-color: #b78b42;
+    box-shadow: 0 0 0 2px #d8bd8540;
+}
+
+.control svg {
+    height: 17px;
+    width: 17px;
+    flex-shrink: 0;
+    margin-right: 12px;
+    stroke: #333;
+    fill: none;
+    stroke-width: 1.7;
+}
+
+.control input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #222;
+}
+
+.control input::placeholder {
+    color: #929292;
+}
+
+.submit {
+    width: 100%;
+    height: 37px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(
+        90deg,
+        #b38b6d,
+        #eedb8e
+    );
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+.submit:hover {
+    filter: brightness(0.96);
+}
+
+.login {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.login a {
+    color: #986316;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.errors {
+    margin: 6px 0;
+    color: #ba1a1a;
+    font-size: 13px;
+}
+
+.errors p {
+    margin: 3px 0;
+}
+
+@media (max-width: 600px) {
+    .notice {
+        margin-top: 28px;
+        font-size: 14px;
+    }
+
+    .panel {
+        margin-top: 100px;
+        padding-top: 55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="notice">
+    👻 Demo Play Hub में आपका स्वागत है!
+    अपना अकाउंट बनाएं और डेमो गेम्स खेलें 👻
+</div>
+
+<main class="panel">
+
+    <div class="logo" aria-label="Demo Play Hub logo">
+        DP<small>H</small>
+    </div>
+
+    <h1>Create Account</h1>
+
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="errors">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <div class="field">
+            <label for="full_name">Full Name</label>
+            <div class="control">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="7" r="4"/>
+                    <path d="M4 21v-3a8 8 0 0 1 16 0v3"/>
+                </svg>
+                <input
+                    id="full_name"
+                    name="full_name"
+                    type="text"
+                    maxlength="150"
+                    placeholder="Full Name"
+                    autocomplete="name"
+                    value="{{ form.full_name.value|default_if_none:'' }}"
+                    required
+                >
+            </div>
+            <div class="errors">
+                {{ form.full_name.errors }}
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="mobile">Mobile Number</label>
+            <div class="control">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="7" r="4"/>
+                    <path d="M4 21v-3a8 8 0 0 1 16 0v3"/>
+                </svg>
+                <input
+                    id="mobile"
+                    name="mobile"
+                    type="tel"
+                    inputmode="numeric"
+                    maxlength="10"
+                    pattern="[6-9][0-9]{9}"
+                    placeholder="Mobile Number"
+                    autocomplete="tel-national"
+                    value="{{ form.mobile.value|default_if_none:'' }}"
+                    required
+                >
+            </div>
+            <div class="errors">
+                {{ form.mobile.errors }}
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="mpin">
+                MPIN <em>(minimum 8 characters)</em>
+            </label>
+            <div class="control">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="7" r="4"/>
+                    <path d="M4 21v-3a8 8 0 0 1 16 0v3"/>
+                </svg>
+                <input
+                    id="mpin"
+                    name="mpin"
+                    type="password"
+                    minlength="8"
+                    placeholder="Create MPIN"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+            <div class="errors">
+                {{ form.mpin.errors }}
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="confirm_mpin">Confirm MPIN</label>
+            <div class="control">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="7" r="4"/>
+                    <path d="M4 21v-3a8 8 0 0 1 16 0v3"/>
+                </svg>
+                <input
+                    id="confirm_mpin"
+                    name="confirm_mpin"
+                    type="password"
+                    minlength="8"
+                    placeholder="Confirm MPIN"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+            <div class="errors">
+                {{ form.confirm_mpin.errors }}
+            </div>
+        </div>
+
+        <button class="submit" type="submit">
+            Create Account
+        </button>
+    </form>
+
+    <div class="login">
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </div>
+
+</main>
+
+</body>
+</html>
